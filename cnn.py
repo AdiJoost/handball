@@ -28,7 +28,7 @@ def main():
                 for j in range(8, 10):
                     model = get_model(layers= i, activations=activat, neurons=j, optimizer=optimi)
                     mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
-                    save(mod, predict, layers=i, activation=activat, neurons=j, optimizer=optimi)
+                    save(mod, predic, layers=i, activation=activat, neurons=j, optimizer=optimi)
 
 def train_model(model, X_train, X_test, y_train, y_test, epochs=10, batch_size=10):
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
@@ -37,14 +37,18 @@ def train_model(model, X_train, X_test, y_train, y_test, epochs=10, batch_size=1
 def save(model, prediction_values, layers, activation, neurons, optimizer):
     dt = datetime.now()
     ts = datetime.timestamp(dt)
+    model_name = f"{activation}-{ts}"
+    model.save(f"trained_models/{model_name}")
     data = json.dumps({
+        "model": model_name,
         "predictions": prediction_values,
         "layers": layers,
         "activation": activation,
         "neurons": neurons,
         "optimizer": optimizer
     })
-    with open
+    with open("trained_models/meta_data.json", "a") as file:
+        file.write(data)
 
 def load_data():
     return pd.read_csv("Data/cardio_train.csv", sep=";")
@@ -104,8 +108,9 @@ def get_model(
     model = Sequential()
     model.add(Dense(neurons, activation=activations, input_shape=(15,)))
 
-    for i in range(1, layers):
+    for i in range(1, layers -1):
         model.add(Dense(neurons, activation=activations))
+    model.add(Dense(1, activation=activations))
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
     return model
 
