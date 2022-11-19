@@ -3,6 +3,12 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
+from random import randint
+
+#Hyper-parameters
+optimizers_hyper = ["sgd", "adam", "RMSprop"]
+loss_hyper=["binary_crossentropy"]
+activations_hyper=["relu", "sigmoid", "softmax", "tanh"]
 
 
 
@@ -12,14 +18,22 @@ def main():
     #print(f"Any null: {df.isnull().values.any()}")
     Y, X = prepare_data(df)
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1)
-    model = get_model()
-    model.fit(
-        X_train,
-        y_train,
-        epochs=10,
-        batch_size=10
-    )
-    print(model.evaluate(X_test, y_test))
+    model = get_model(layers=5, neurons=30, activations="tanh", loss="binary_crossentropy")
+    
+    for optimi in optimizers_hyper:
+        for activat in activations_hyper:
+            for i in range (2, 5):
+                for j in range(8, 10):
+                    model = get_model(layers= i, activations=activat, neurons=j, optimizer=optimi)
+                    test_mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
+                    if(predic[1] > 0.4):
+                        trained_model, prediction = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
+
+    trained, predic = train_model(model, X_train, X_test, y_train, y_test)
+
+def train_model(model, X_train, X_test, y_train, y_test, epochs=10, batch_size=10):
+    model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
+    return (model, model.evaluate(X_test, y_test))
 
 
 
@@ -73,18 +87,29 @@ def print_array_info(arry, name="name"):
 
 def get_model(
         layers=3,
-        neurons=(20,20,1), 
-        activations=("sigmoid", "sigmoid", "sigmoid"),
-        optimizer="sgd",
+        neurons=20, 
+        activations="tanh",
+        optimizer="adam",
         loss="binary_crossentropy",
         metrics=["accuracy"]):
     model = Sequential()
-    model.add(Dense(neurons[0], activation=activations[0], input_shape=(15,)))
+    model.add(Dense(neurons, activation=activations, input_shape=(15,)))
 
     for i in range(1, layers):
-        model.add(Dense(neurons[i], activation=activations[i]))
+        model.add(Dense(neurons, activation=activations))
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
     return model
+
+def hyper_param_setter(layers, min_neuro_range=5, max_neuro_range=20, possible_activations=activations_hyper):
+    neurons = []
+    activations = []
+    for i in range(layers):
+        number = randint(min_neuro_range, max_neuro_range)
+        neurons.append(number)
+        rand_activation = randint(0, len(possible_activations) - 1)
+        activations.append(possible_activations[rand_activation])
+    neurons[-1] = 1
+    return tuple(neurons), tuple(activations)
 
 if __name__ == "__main__":
     main()
