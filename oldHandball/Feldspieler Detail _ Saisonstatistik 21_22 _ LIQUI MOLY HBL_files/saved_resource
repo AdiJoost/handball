@@ -1,0 +1,36 @@
+window.Adform.Tracking.TrackingPointId = 30463088;
+window.Adform.Tracking.TrackingPointName = "handball-league-de";
+Adform.Tracking.CreateIframeElement("https://track.adform.net/serving/container/?pm=497538&lid=30463088&ctype=0&media=0&PageName=handball-league-de&rnd=1444909349&cpref=https%3a%2f%2fwww.liquimoly-hbl.de%2fde%2fliqui-moly-hbl%2fstatistiken%2fsaisonen%2fstatistiken%2fsaison-21-22%2fsaisonstatistik%2ffeldspieler%2f&loc=https%3a%2f%2fwww.liquimoly-hbl.de%2fde%2fliqui-moly-hbl%2fstatistiken%2fsaisonen%2fstatistiken%2fsaison-21-22%2fsaison");try{
+if (location.href.match(/gclid=/)) {
+    adf.track(497538,"SearchTraffic");
+}
+if (location.href.match(/facebook|instagram|t.co|snapchat|btag/i)){
+    adf.track(497538, "Sc_Ret");
+}
+if (document.referrer.match(/google/)) {
+   adf.track(497538,"SearchTraffic");
+}
+(function () {
+    const uid = '0' || '';
+    
+    if (uid) {
+        window.Adform_probabilistic_uid = uid;
+    }
+})();
+// <script type="text/javascript"> 
+// (function(p){ 
+//     p.src = "//dmp.adform.net/serving/cookie/match?party=1140&cid=&uid=0"
+// })(document.createElement("img"));
+// </script>
+
+
+// <!--<script type="text/javascript">-->
+// <!--    (function(p){-->
+// <!--        p.src = "//dmp.adform.net/dmp/profile/?pid=11423&sg=sb-football";-->
+// <!--    })(document.createElement("img"));-->
+// <!--</script>-->
+// <!--<noscript>-->
+// <!--    <img src="//dmp.adform.net/dmp/profile/?pid=11423&sg=sb-football" style="display:none !important">-->
+// <!--</noscript>-->
+new Image().src ='https://dmp.adform.net/serving/cookie/match?party=1140&cid=&uid=0';
+}catch(e){}
