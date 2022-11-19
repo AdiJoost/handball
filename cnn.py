@@ -4,6 +4,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from random import randint
+import json
+from datetime import datetime
 
 #Hyper-parameters
 optimizers_hyper = ["sgd", "adam", "RMSprop"]
@@ -25,17 +27,24 @@ def main():
             for i in range (2, 5):
                 for j in range(8, 10):
                     model = get_model(layers= i, activations=activat, neurons=j, optimizer=optimi)
-                    test_mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
-                    if(predic[1] > 0.4):
-                        trained_model, prediction = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
-
-    trained, predic = train_model(model, X_train, X_test, y_train, y_test)
+                    mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
+                    save(mod, predict, layers=i, activation=activat, neurons=j, optimizer=optimi)
 
 def train_model(model, X_train, X_test, y_train, y_test, epochs=10, batch_size=10):
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
     return (model, model.evaluate(X_test, y_test))
 
-
+def save(model, prediction_values, layers, activation, neurons, optimizer):
+    dt = datetime.now()
+    ts = datetime.timestamp(dt)
+    data = json.dumps({
+        "predictions": prediction_values,
+        "layers": layers,
+        "activation": activation,
+        "neurons": neurons,
+        "optimizer": optimizer
+    })
+    with open
 
 def load_data():
     return pd.read_csv("Data/cardio_train.csv", sep=";")
