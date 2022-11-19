@@ -1,16 +1,18 @@
 import pandas as pd
+import numpy as np
 from keras.models import Sequential
 from keras.layers import Conv2D
+from sklearn import train_test_split
 
 
 
 
 def main():
     df = load_data()
-    print(f"Any null: {df.isnull().values.any()}")
+    #print(f"Any null: {df.isnull().values.any()}")
     Y, X = prepare_data(df)
-    print_array_info(Y)
-    print_array_info(X)
+    print_array_info(Y, "Labels")
+    print_array_info(X, "Input-Data")
 
 
 def load_data():
@@ -53,6 +55,12 @@ def get_one_hot(df, col, axis_names):
     df = df.drop(col, axis=1)
     df = df.join(one_h)
     return df
+
+def print_array_info(arry, name="name"):
+    print(f"Array {name}:")
+    print(f"ndim: {arry.ndim}")
+    print(f"shape: {arry.shape}")
+    print(f"size: {arry.shape}")
 
 if __name__ == "__main__":
     main()
