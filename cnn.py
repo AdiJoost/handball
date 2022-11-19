@@ -24,10 +24,10 @@ def main():
     
     for optimi in optimizers_hyper:
         for activat in activations_hyper:
-            for i in range (2, 5):
-                for j in range(8, 10):
+            for i in range (3, 50):
+                for j in range(2, 100):
                     model = get_model(layers= i, activations=activat, neurons=j, optimizer=optimi)
-                    mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=2)
+                    mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=50)
                     save(mod, predic, layers=i, activation=activat, neurons=j, optimizer=optimi)
 
 def train_model(model, X_train, X_test, y_train, y_test, epochs=10, batch_size=10):
