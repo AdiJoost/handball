@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Conv2D
-from sklearn import train_test_split
+from keras.layers import Dense
+from sklearn.model_selection import train_test_split
 
 
 
@@ -11,8 +11,16 @@ def main():
     df = load_data()
     #print(f"Any null: {df.isnull().values.any()}")
     Y, X = prepare_data(df)
-    print_array_info(Y, "Labels")
-    print_array_info(X, "Input-Data")
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1)
+    model = get_model()
+    model.fit(
+        X_train,
+        y_train,
+        epochs=10,
+        batch_size=10
+    )
+    print(model.evaluate(X_test, y_test))
+
 
 
 def load_data():
@@ -61,6 +69,22 @@ def print_array_info(arry, name="name"):
     print(f"ndim: {arry.ndim}")
     print(f"shape: {arry.shape}")
     print(f"size: {arry.shape}")
+    print("___________________________________")
+
+def get_model(
+        layers=3,
+        neurons=(20,20,1), 
+        activations=("sigmoid", "sigmoid", "sigmoid"),
+        optimizer="sgd",
+        loss="binary_crossentropy",
+        metrics=["accuracy"]):
+    model = Sequential()
+    model.add(Dense(neurons[0], activation=activations[0], input_shape=(15,)))
+
+    for i in range(1, layers):
+        model.add(Dense(neurons[i], activation=activations[i]))
+    model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+    return model
 
 if __name__ == "__main__":
     main()
