@@ -20,7 +20,7 @@ def main():
     X_test = scaler.fit_transform(X_test)
     X_train = scaler.fit_transform(X_train)
 
-    clf = SGDClassifier(loss="log", penalty="l2", max_iter=900, tol=1e-3)
+    clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=900, tol=1e-3)
     clf.fit(X_train,y_train)
     pred = clf.predict(X_test)
     print("Coef: " , clf.coef_)

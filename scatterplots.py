@@ -8,4 +8,6 @@ print(df.head())
 plt.scatter(df["age"] / 365 , df["weight"], c=df["cardio"], marker=",", linewidths=0.4, edgecolors=None)
 plt.legend()
 
+plt.hist(df["age"]/ 365)
+
 plt.show()

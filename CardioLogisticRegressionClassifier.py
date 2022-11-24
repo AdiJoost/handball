@@ -12,16 +12,17 @@ from sklearn import preprocessing
 def main():
     df = loadCardioData()
     # getInfo(df)
-
     scaler = preprocessing.StandardScaler()
-    X_train, X_test, y_train, y_test = trainTestSplit(df.head(2000))
+    X_train, X_test, y_train, y_test = trainTestSplit(df)
 
-    X_test = scaler.fit_transform(X_test)
     X_train = scaler.fit_transform(X_train)
+    X_test = scaler.fit_transform(X_test)
+
 
 
     # params = {'max_depth': []}
     # grid_search_cv = GridSearchCV(LogisticRegression(random_state=42), params, verbose=1, cv=3)
+
     # grid_search_cv.fit(X_train, y_train)
     # print("BestEstimator: ", grid_search_cv.best_estimator_)
     # print("BestParams: ", grid_search_cv.best_params_)
@@ -40,7 +41,7 @@ def main():
     print("pred", pred[:20])
     print(logReg.get_params())
     print(accuracy_score(y_test,pred))
-
+    evaluateClassifier(pred,y_test)
 def evaluateClassifier(pred, act):
     print("Accuracy", accuracy_score(act, pred))
     # Null accuracy: accuracy that could be achieved by always predicting the most frequent class
@@ -49,7 +50,10 @@ def evaluateClassifier(pred, act):
 
 
 def loadCardioData():
+
+
     return pd.read_csv("Data/cardio_train.csv", delimiter=";")
+
 
 def trainTestSplit(df):
     from sklearn.model_selection import train_test_split
