@@ -1,5 +1,0 @@
-if (typeof(Translations) === "undefined") {
-            var Translations = {};
-        }
-
-        Translations.keys ={"BuiltInSearch":{"_translation":"","searchTermText":{"_translation":"Suchbegriff"},"searchLengthError":{"_translation":"Der Suchbegriff muss aus mindestens 3 Zeichen bestehen"},"resultsFoundTextPart1":{"_translation":"Es wurden"},"resultsFoundTextPart2":{"_translation":"Suchergebnisse f\u00fcr"},"resultsFoundTextPart3":{"_translation":"gefunden."},"searchButtonText":{"_translation":"Suchen"},"searchResetText":{"_translation":"Zur\u00fccksetzen"}}}
