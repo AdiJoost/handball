@@ -97,7 +97,7 @@ def hyper_search(X_train, X_test, y_train, y_test):
         cols = [False for _ in range(X_train.shape[1])]
         for i in perm:
             cols[i-1] = True
-        model = train(X_train, y_train, perm)
+        model = train(X_train, y_train, cols)
         y_test_predi = model.predict(X_test[:,cols])
         precision, recall, f1, acc, confM = eval(model, X_train, X_test, y_train, y_test, y_test_predi)
         log_csv((precision, recall, f1, acc, f"({confM[0][0], confM[0][1], confM[1][0], confM[1][1]})", perm))
