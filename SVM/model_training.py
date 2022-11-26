@@ -92,6 +92,8 @@ def get_permutations():
 def hyper_search(X_train, X_test, y_train, y_test):
     perms = get_permutations()
     for perm in perms:
+        if len(perm) < 1:
+            continue
         cols = [False for _ in range(X_train.shape[1])]
         for i in perm:
             cols[i-1] = True
