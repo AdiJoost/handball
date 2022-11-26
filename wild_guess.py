@@ -15,13 +15,13 @@ import matplotlib.pyplot as plt
 def main():
     df = load_data()
     show_plot(df)
-    #correct, total = evaluate(df, -(100/9125), 100)
+    correct, total = evaluate(df, -(100/9125), 100)
     #print(f"From {total}-predictions are {correct} cases correct predicted, resulting in"\
     #    f" accuracy of {correct / total}")
-    #best = train_me(df, m_power_10=1000)
-    #print(f"Best accuracy: {best[2]}")
-    #print(f"m: {best[0]}")
-    #print(f"q: {best[1]}")
+    best = train_me(df, m_power_10=1000)
+    print(f"Best accuracy: {best[2]}")
+    print(f"m: {best[0]}")
+    print(f"q: {best[1]}")
 
 def load_data():
     df = pd.read_csv("Data/cardio_train.csv", sep=";", usecols=["age", "weight", "cardio"])

@@ -19,6 +19,8 @@ def main():
     df = load_data()
     #print(f"Any null: {df.isnull().values.any()}")
     Y, X = prepare_data(df)
+    print(X.shape)
+    """
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1)
     model = get_model(layers=5, neurons=30, activations="tanh", loss="binary_crossentropy")
     
@@ -29,6 +31,7 @@ def main():
                     model = get_model(layers= i, activations=activat, neurons=j, optimizer=optimi)
                     mod, predic = train_model(model, X_train, X_test, y_train, y_test, epochs=50)
                     save(mod, predic, layers=i, activation=activat, neurons=j, optimizer=optimi)
+    """
 
 def train_model(model, X_train, X_test, y_train, y_test, epochs=10, batch_size=10):
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)

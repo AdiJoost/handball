@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 meta_data.json
+SVM_EVAL.csv
 
 # C extensions
 *.so
