@@ -74,8 +74,8 @@ def removeUnrealistic(df):
     cols = [
         ("height", 150, 210),
         ("weight", 40, 250),
-        ("ap_hi", 80 ,200),
-        ("ap_lo", 50, 200),
+        ("ap_hi", 80,200),
+        ("ap_lo", 50, 120),
     ]
     for col, min, max in cols:
         filtermag =  df[col] < max
