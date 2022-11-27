@@ -1,3 +1,10 @@
+"""
+Because of the implementation of a Logger, this File has to
+be executed in a Folder, that is a subfolder of a Folder
+called "handball", the cardio_dataset has to be in a direct
+subfolder "Data" from handball
+"""
+
 import pandas as pd
 import os
 import numpy as np
