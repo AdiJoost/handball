@@ -14,7 +14,11 @@ def main():
     model = get_model()
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1)
     print(np.unique(y_test, return_counts=True))
-    hyper_search(X_train, X_test, y_train, y_test)
+    model.fit(X_train, y_train)
+    y_test_predi = model.predict(X_test)
+    precision, recall, f1, acc, confM = eval(model, X_train, X_test, y_train, y_test, y_test_predi)
+    log_csv((precision, recall, f1, acc, f"({confM[0][0], confM[0][1], confM[1][0], confM[1][1]})", "all"))
+    #hyper_search(X_train, X_test, y_train, y_test)
     #perms = get_permutations()
     #cols = [False for _ in range(X_train.shape[1])]
     #for i in perms[11]:
@@ -50,7 +54,8 @@ def load_data(file):
 
 
 def prepare_data(df):
-
+    df = removeUnrealistic(df)
+    print(df.head())
     #extract label
     Y = df["cardio"]
     df = df.drop("cardio", axis=1)
@@ -64,6 +69,21 @@ def prepare_data(df):
     df["gender"] = df["gender"] -1
 
     return Y.to_numpy(), df.to_numpy()
+
+def removeUnrealistic(df):
+    cols = [
+        ("height", 150, 210),
+        ("weight", 40, 250),
+        ("ap_hi", 80 ,200),
+        ("ap_lo", 50, 200),
+    ]
+    for col, min, max in cols:
+        filtermag =  df[col] < max
+        df = df[filtermag]
+        filtermag =  df[col] > min
+        df = df[filtermag]
+    return df
+
     
 def min_max(df, column):
     return_df = pd.DataFrame()
