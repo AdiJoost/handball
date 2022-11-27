@@ -79,7 +79,7 @@ def prepare_data(df):
 
 def removeUnrealistic(df):
     cols = [
-        ("height", 150, 210),
+        ("height", 100, 210),
         ("weight", 40, 250),
         ("ap_hi", 80,200),
         ("ap_lo", 50, 120),
